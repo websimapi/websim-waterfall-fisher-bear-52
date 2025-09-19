@@ -9,7 +9,19 @@ export const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window
 camera.position.set(0, 12, 9);
 camera.lookAt(0, 2, 0);
 
-export const renderer = new THREE.WebGLRenderer({ antialias: true });
+export const renderer = (() => {
+    try {
+        return new THREE.WebGLRenderer({ antialias: true, alpha: false, powerPreference: 'high-performance', failIfMajorPerformanceCaveat: false });
+    } catch (e1) {
+        console.warn('WebGLRenderer failed, falling back to WebGL1Renderer', e1);
+        try {
+            return new THREE.WebGL1Renderer({ antialias: false, alpha: false, powerPreference: 'default', failIfMajorPerformanceCaveat: false });
+        } catch (e2) {
+            console.error('WebGL initialization failed', e2);
+            throw e2;
+        }
+    }
+})();
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 let controls;
@@ -45,4 +57,3 @@ export function mountRenderer(container) {
     container.appendChild(renderer.domElement);
     resizeRenderer();
 }
-
