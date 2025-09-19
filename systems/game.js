@@ -138,8 +138,9 @@ function setupShowcaseAnimation() {
           .onUpdate(() => {
               const ud = showcaseFish.userData || {};
               const phase = wiggle.t;
-              if (ud.tailV) ud.tailV.rotation.y = Math.sin(phase) * 0.32;
-              if (ud.tailH) ud.tailH.rotation.y = Math.sin(phase) * 0.32;
+              const tailSwing = Math.sin(phase) * 0.22; // gentler showcase wiggle
+              if (ud.tailV) ud.tailV.rotation.y = tailSwing;
+              if (ud.tailH) ud.tailH.rotation.y = tailSwing;
                if (ud.segments) {
                    for (const s of ud.segments) {
                        const ramp = Math.min(1, Math.max(0, (s.phase - 0.55) / 0.4)); // tail-biased wiggle
