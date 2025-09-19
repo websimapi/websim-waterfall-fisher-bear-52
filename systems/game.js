@@ -138,7 +138,7 @@ function setupShowcaseAnimation() {
           .onUpdate(() => {
               const ud = showcaseFish.userData || {};
               const phase = wiggle.t;
-              const tailSwing = Math.sin(phase) * 0.22; // gentler showcase wiggle
+              const tailSwing = Math.sin(phase) * 0.14; // gentler showcase wiggle, reduced to avoid clipping
               if (ud.tailV) ud.tailV.rotation.y = tailSwing;
               if (ud.tailH) ud.tailH.rotation.y = tailSwing;
                if (ud.segments) {

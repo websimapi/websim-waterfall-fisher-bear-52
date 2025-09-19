@@ -49,8 +49,8 @@ export function createFish(scene, score = 0, type = 'classic', opts = {}, addToS
     // tail (vertical caudal fin + small stabilizer)
     const tailZ = -0.4 + length + 0.20; // push slightly back from body
     const tailBase = createVoxel(0, 0.0, tailZ - 0.1, 0.22, 0.55, 0.16, fishTailMat);
-    const tailV = createVoxel(0, 0.0, tailZ, 0.04, 0.62, 0.36, fishTailMat); // slimmer, shorter
-    const tailH = createVoxel(0, -0.05, tailZ - 0.06, 0.36, 0.05, 0.24, fishTailMat); // slimmer, shorter
+    const tailV = createVoxel(0, 0.0, tailZ, 0.04, 0.50, 0.28, fishTailMat); // slimmer, shorter
+    const tailH = createVoxel(0, -0.05, tailZ - 0.06, 0.28, 0.05, 0.18, fishTailMat); // slimmer, shorter
     group.add(tailBase, tailV, tailH);
 
     // fins
@@ -90,8 +90,8 @@ export function createFish(scene, score = 0, type = 'classic', opts = {}, addToS
         prevX: xPos,
         tailV, tailH, dorsal, anal, pectoralL, pectoralR,
         segments: segmentsArr, wiggleAmp: 0.22, wiggleFreq: 2.6,
-        wiggleRotAmp: 0.12,
-        tailMaxRot: 0.14, // tighter cap to avoid clipping
+        wiggleRotAmp: 0.10,
+        tailMaxRot: 0.10, // tighter cap to avoid clipping
         pattern: opts.pattern || ['sine','zigzag','drift'][Math.floor(Math.random()*3)],
         drift: 0
     };
