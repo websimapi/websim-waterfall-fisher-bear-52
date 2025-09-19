@@ -49,8 +49,8 @@ export function createFish(scene, score = 0, type = 'classic', opts = {}, addToS
     // tail (vertical caudal fin + small stabilizer)
     const tailZ = -0.4 + length + 0.20; // push slightly back from body
     const tailBase = createVoxel(0, 0.0, tailZ - 0.1, 0.22, 0.55, 0.16, fishTailMat);
-    const tailV = createVoxel(0, 0.0, tailZ, 0.05, 0.75, 0.42, fishTailMat); // slimmer, shorter
-    const tailH = createVoxel(0, -0.05, tailZ - 0.06, 0.42, 0.06, 0.28, fishTailMat); // slimmer, shorter
+    const tailV = createVoxel(0, 0.0, tailZ, 0.04, 0.62, 0.36, fishTailMat); // slimmer, shorter
+    const tailH = createVoxel(0, -0.05, tailZ - 0.06, 0.36, 0.05, 0.24, fishTailMat); // slimmer, shorter
     group.add(tailBase, tailV, tailH);
 
     // fins
@@ -90,8 +90,8 @@ export function createFish(scene, score = 0, type = 'classic', opts = {}, addToS
         prevX: xPos,
         tailV, tailH, dorsal, anal, pectoralL, pectoralR,
         segments: segmentsArr, wiggleAmp: 0.22, wiggleFreq: 2.6,
-        wiggleRotAmp: 0.18,
-        tailMaxRot: 0.26, // cap tail rotation to avoid clipping
+        wiggleRotAmp: 0.12,
+        tailMaxRot: 0.14, // tighter cap to avoid clipping
         pattern: opts.pattern || ['sine','zigzag','drift'][Math.floor(Math.random()*3)],
         drift: 0
     };
@@ -132,7 +132,9 @@ export function updateFish(fish) {
     fish.rotation.y = ud.baseRotY + Math.sin(ud.swimTimer * ud.swimFrequency) * 0.12;
     fish.rotation.z = THREE.MathUtils.clamp(-dx * 0.6, -0.3, 0.3);
     // tail wag and fin flaps
-    const tailSwing = Math.sin(ud.swimTimer * 2.2) * (ud.tailMaxRot || 0.26);
+    const turn = Math.abs(dx);
+    const damp = THREE.MathUtils.clamp(1 - turn * 8, 0.35, 1);
+    const tailSwing = Math.sin(ud.swimTimer * 2.2) * (ud.tailMaxRot || 0.14) * damp;
     if (ud.tailV) ud.tailV.rotation.y = tailSwing;
     if (ud.tailH) ud.tailH.rotation.y = tailSwing;
     const finFlap = Math.sin(ud.swimTimer * 3.0) * 0.25;
