@@ -142,7 +142,8 @@ function setupShowcaseAnimation() {
               if (ud.tailH) ud.tailH.rotation.y = Math.sin(phase) * 0.45;
               if (ud.segments) {
                   for (const s of ud.segments) {
-                      const amp = (ud.wiggleRotAmp ? ud.wiggleRotAmp * 0.6 : 0.18) * s.phase;
+                      const ramp = Math.min(1, Math.max(0, (s.phase - 0.55) / 0.4)); // tail-biased wiggle
+                      const amp = (ud.wiggleRotAmp ? ud.wiggleRotAmp * 0.6 : 0.18) * ramp;
                       s.mesh.rotation.y = (s.baseRotY || 0) + Math.sin(phase + s.phase * Math.PI) * amp;
                   }
               }

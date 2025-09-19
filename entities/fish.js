@@ -141,7 +141,8 @@ export function updateFish(fish) {
     // spine wiggle across segments - rotate around Y to avoid geometry overlap
     const spinePhase = ud.swimTimer * ud.wiggleFreq;
     if (ud.segments) for (const s of ud.segments) {
-        const localAmp = (ud.wiggleRotAmp || 0.25) * s.phase; // less at head, more at tail
+        const tailFactor = THREE.MathUtils.smoothstep(s.phase, 0.55, 0.95); // lock head/mid, ramp up toward tail
+        const localAmp = (ud.wiggleRotAmp || 0.25) * tailFactor;
         s.mesh.rotation.y = (s.baseRotY || 0) + Math.sin(spinePhase + s.phase * Math.PI) * localAmp;
     }
 }
